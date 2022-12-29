@@ -24,13 +24,13 @@ for (var i = 0; i < 50; i++) {
    // function that returns a random owner
 
     var feature = {
-      id: count,
+     
       geometry: {
         type: "Polygon",
         coordinates: coordinates,
       },
       type: "Feature",
-      properties: { color: "#" + Math.floor(Math.random() * 16777215).toString(16), owner: "" },
+      properties: { id: count, color: "#" + Math.floor(Math.random() * 16777215).toString(16), owner: "" },
     };
     features.push(feature);
     origin = cordDest1;
