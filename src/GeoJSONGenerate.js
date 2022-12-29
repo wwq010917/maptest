@@ -1,6 +1,6 @@
 const SphericalMercator = require("@mapbox/sphericalmercator");
 const merc = new SphericalMercator({
-  size: 256,
+  size: 512,
   antimeridian: true,
 });
 var features = [];
@@ -9,9 +9,9 @@ var count = 0;
 for (var i = 0; i < 50; i++) {
   for (var j = 0; j < 50; j++) {
     var pixelOrigin = merc.px(origin, 22);
-    const pixelDest1 = [pixelOrigin[0], pixelOrigin[1] - 152];
-    const pixelDest2 = [pixelOrigin[0] + 152, pixelOrigin[1] - 152];
-    const pixelDest3 = [pixelOrigin[0] + 152, pixelOrigin[1]];
+    const pixelDest1 = [pixelOrigin[0], pixelOrigin[1] - 725];
+    const pixelDest2 = [pixelOrigin[0] + 725, pixelOrigin[1] - 725];
+    const pixelDest3 = [pixelOrigin[0] + 725, pixelOrigin[1]];
     const cordDest1 = merc.ll(pixelDest1, 22);
     const cordDest2 = merc.ll(pixelDest2, 22);
     const cordDest3 = merc.ll(pixelDest3, 22);

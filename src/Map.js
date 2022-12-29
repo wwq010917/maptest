@@ -48,7 +48,7 @@ const Map = () => {
  
       map.addSource('polygons', {
         type: 'vector',
-        url: 'mapbox://wwq010917.9zvjdy8e',
+        url: 'mapbox://wwq010917.a29x3cv3',
       });
       
       
@@ -56,7 +56,7 @@ const Map = () => {
         id: 'main',
         type: 'fill',
         source: 'polygons',
-        'source-layer': 'polygons-dxcex8',
+        'source-layer': 'polygons-651mrd',
         paint: {
           'fill-color': [
             "case",
@@ -71,12 +71,13 @@ const Map = () => {
     });
     map.on('click', function(e) {
       var features = map.queryRenderedFeatures(e.point, { layers: ['main'] });
+      console.log(features)
       if (!features.length) {
       return;
       }
       const clickedPolygon = features[0]
       console.log(clickedPolygon.id)
-      map.setFeatureState({ source: 'polygons', sourceLayer: 'polygons-dxcex8', id: clickedPolygon.id }, { fillColor: 'red' });
+      map.setFeatureState({ source: 'polygons', sourceLayer: 'polygons-651mrd', id: clickedPolygon.id }, { fillColor: 'red' });
       console.log()
       });
     // Clean up on unmount
