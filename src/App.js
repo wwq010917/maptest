@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import Map from "./Map";
 
+
 function App() {
-  return <Map />;
+  
+
+  return (
+    <div>
+    
+      <Map />
+    </div>
+  );
 }
 
 export default App;

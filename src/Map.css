@@ -4,30 +4,78 @@
   bottom: 0;
   left: 0;
   right: 0;
+
+ 
 }
 
-.sidebarStyle {
-  display: inline-block;
+.color-panel {
+  position: absolute;
+  z-index: 1;
+  top: 10px;
+  left: 10px;
+  width: 300px;
+  background-color:rgb(24, 168, 184);
+  border: 1px solid gray;
+  padding: 20px;
+}
+.color-options {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  }
+  
+  .color-option {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  }
+  
+  .color-option input {
   position: absolute;
   top: 0;
   left: 0;
-  margin: 12px;
-  background-color: #404040;
-  color: #ffffff;
-  z-index: 1 !important;
-  padding: 6px;
-  font-weight: bold;
-}
-
-.marker {
-  background-color: #4CAF50;
-  border: 1px solid blue;
-  color: white;
-  padding: 20px;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  }
+  
+  .color-option span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  border-radius: 50%;
-}
+  color: white;
+  }
+  
+  .color-option.red {
+  background-color: red;
+  }
+  
+  .color-option.orange {
+  background-color: orange;
+  }
+  
+  .color-option.yellow {
+  background-color: yellow;
+  }
+  
+  .color-option.green {
+  background-color: green;
+  }
+  
+  .color-option.blue {
+  background-color: blue;
+  }
+  .color-option.purple{
+    background-color: purple;
+  }
+  
+  
+  

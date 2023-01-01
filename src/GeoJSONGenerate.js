@@ -18,19 +18,18 @@ for (var i = 0; i < 50; i++) {
     if (j == 0) {
       iter = cordDest3;
     }
-
     var coordinates = [[origin, cordDest1, cordDest2, cordDest3, origin],
     ];
    // function that returns a random owner
 
     var feature = {
-     
+      id: count,
       geometry: {
         type: "Polygon",
         coordinates: coordinates,
       },
       type: "Feature",
-      properties: { id: count, color: "#" + Math.floor(Math.random() * 16777215).toString(16), owner: "" },
+      
     };
     features.push(feature);
     origin = cordDest1;
@@ -51,5 +50,11 @@ const fs = require('fs');
 // Convert the source data to a string in GeoJSON format
 const geojsonString = JSON.stringify(source.data);
 
-// Write the string to a file
-fs.writeFileSync('polygons.geojson', geojsonString);
+// Write the string to a file asynchronously
+fs.writeFile('polygons.geojson', geojsonString, (error) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('Successfully written to polygons.geojson');
+  }
+});

@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "layers": {
+    "test7": {
+      "source": "mapbox://tileset-source/wwq010917/test7-src",
+      "minzoom": 10,
+      "maxzoom": 16,
+      "features":{
+        "simplification": {
+          "outward_only": true,
+          "distance": 1
+        }
+      }
+    }
+  }
+}
