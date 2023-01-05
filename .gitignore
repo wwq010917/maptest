@@ -29,3 +29,5 @@ src/test.geojson
 src/westLafayette.geojson
 .gitignore
 src/polygons1.geojsonl
+src/polygons.geojson
+src/grid.geojson

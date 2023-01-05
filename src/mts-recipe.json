@@ -1,13 +1,12 @@
 {
   "version": 1,
   "layers": {
-    "bigtile": {
-      "source": "mapbox://tileset-source/wwq010917/bigtile-src",
-      "minzoom": 11,
+    "Tippecanoe4": {
+      "source": "mapbox://tileset-source/wwq010917/Tippecanoe4-src",
+      "minzoom": 13,
       "maxzoom": 16,
-      "features": {"simplification": {"distance": 0}},
+      "features": { "simplification": { "distance": 0 } },
       "tiles": {
-        
         "layer_size": 2500
       }
     }

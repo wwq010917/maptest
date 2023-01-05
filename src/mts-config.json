@@ -1,7 +1,7 @@
 {
   "username": "wwq010917",
-  "tilesetSourceId": "bigtile-src",
+  "tilesetSourceId": "Tippecanoe4-src",
   "tilesetSourcePath": "polygons.geojsonl",
-  "tilesetId": "bigtile",
-  "tilesetName": "bigtile"
+  "tilesetId": "Tippecanoe4",
+  "tilesetName": "Tippecanoe4"
 }
