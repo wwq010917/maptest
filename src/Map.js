@@ -18,9 +18,11 @@ const Map = () => {
   };
 
   const mapContainerRef = useRef(null);
-
+  const [zoom, setZoom] = useState(18);
   var origin = [-86.945623, 40.470332];
-
+  const ZoomPanel = () => {
+    return <div className="zoom-panel">Zoom level: {zoom}</div>;
+  };
   // Initialize map when component mounts
   useEffect(() => {
     const map = new mapboxgl.Map({
@@ -30,7 +32,11 @@ const Map = () => {
       zoom: 18, // starting zoom
       minZoom: 3,
     });
+    map.on("zoom", () => {
+      setZoom(map.getZoom().toFixed(2));
+    });
     map.on("load", () => {
+      console.log(zoom);
       const layers = map.getStyle().layers;
       console.log(layers);
       for (const layer of layers) {
@@ -53,7 +59,18 @@ const Map = () => {
       console.log(features);
       const clickedPolygon = features[0];
       console.log(clickedPolygon.id);
-
+      console.log(zoom);
+      if (map.getZoom() >= 15) {
+        console.log("nice");
+        map.setFeatureState(
+          {
+            source: "composite",
+            sourceLayer: "Tippecanoe4",
+            id: clickedPolygon.id,
+          },
+          { fillColor: color, fillOpacity: 1 }
+        );
+      }
       map.setPaintProperty("tippecanoe4", "fill-color", [
         "case",
         ["!=", ["feature-state", "fillColor"], null],
@@ -66,14 +83,6 @@ const Map = () => {
         ["feature-state", "fillOpacity"],
         0,
       ]);
-      map.setFeatureState(
-        {
-          source: "composite",
-          sourceLayer: "Tippecanoe4",
-          id: clickedPolygon.id,
-        },
-        { fillColor: color, fillOpacity: 1 }
-      );
     });
 
     // Clean up on unmount
@@ -82,6 +91,7 @@ const Map = () => {
 
   return (
     <div>
+      <ZoomPanel />
       <div className=".color-panel">
         <ColorPanel onColorChange={handleColorChange} />
       </div>
