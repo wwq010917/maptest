@@ -24,3 +24,8 @@ yarn-error.log*
 src/polygons.geojson
 src/polygons.geojsonl
 
+src/polygons1.geojson
+src/test.geojson
+src/westLafayette.geojson
+.gitignore
+src/polygons1.geojsonl

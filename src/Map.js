@@ -34,6 +34,7 @@ const Map = () => {
       style: "mapbox://styles/wwq010917/clcd19za9008f14qqtna3k281",
       center: origin,
       zoom: 22, // starting zoom
+      minZoom:2,
     });
     map.on("load",  () => {
       
@@ -46,31 +47,37 @@ const Map = () => {
       }
       }
       console.log(layer7)
-      map.addSource('polygons', {
-        type: 'vector',
-        url: 'mapbox://wwq010917.test3',
-      });
+
       map.addControl(new mapboxgl.NavigationControl());
   
     });
     map.on('click', function(e) {
-      console.log(color)
-      var features = map.queryRenderedFeatures(e.point, { layers: ['test7'] });
+
+      var features = map.queryRenderedFeatures(e.point, { layers: ['3dtest7'] });
       if (!features.length) {
       return;
       }
+      console.log(features)
       const clickedPolygon = features[0]
       console.log(clickedPolygon.id)
+
       map.setPaintProperty("test7", "fill-color", [
         "case",
         ["!=", ["feature-state", "fillColor"], null],
         ["feature-state", "fillColor"],
-        "white",
+        "#f8f8ff",
         
       ]);
+      map.setPaintProperty("test7", "fill-opacity", [
+        "case",
+        ["!=", ["feature-state", "fillOpacity"], null],
+        ["feature-state", "fillOpacity"],
+        0,
+      ]);
       map.setFeatureState(
-        { source: "composite", sourceLayer: "test7", id: clickedPolygon.id }, { fillColor: color });
+        { source: "composite", sourceLayer: "test7", id: clickedPolygon.id }, { fillColor: color,fillOpacity:1 });
       });
+      
 
     
     // Clean up on unmount

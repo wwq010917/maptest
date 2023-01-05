@@ -76,6 +76,16 @@ const ColorPanel = (props) => {
           />
          <span style={{ color: "Purple" }}>Purple</span>
         </label>
+        <label>
+          <input
+            type="radio"
+            name="color"
+            value="black"
+            checked={selectedColor === "black"}
+            onChange={handleColorChange}
+          />
+         <span style={{ color: "black" }}>Black</span>
+        </label>
       </div>
       <p>Selected color: {selectedColor}</p>
     </div>

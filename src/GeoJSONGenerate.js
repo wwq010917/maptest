@@ -4,14 +4,15 @@ const merc = new SphericalMercator({
   antimeridian: true,
 });
 var features = [];
-var origin = [-86.945623, 40.470332];
+var origin = [-87.096306,40.214224];
+//[-87.096306,40.214224,-86.694305,40.563003]
 var count = 0;
-for (var i = 0; i < 50; i++) {
-  for (var j = 0; j < 50; j++) {
+for (var i = 0; i < 300; i++) {
+  for (var j = 0; j < 300; j++) {
     var pixelOrigin = merc.px(origin, 22);
-    const pixelDest1 = [pixelOrigin[0], pixelOrigin[1] - 725];
-    const pixelDest2 = [pixelOrigin[0] + 725, pixelOrigin[1] - 725];
-    const pixelDest3 = [pixelOrigin[0] + 725, pixelOrigin[1]];
+    const pixelDest1 = [pixelOrigin[0], pixelOrigin[1] - 1405.38];
+    const pixelDest2 = [pixelOrigin[0] + 1405.38, pixelOrigin[1] - 1405.38];
+    const pixelDest3 = [pixelOrigin[0] + 1405.38, pixelOrigin[1]];
     const cordDest1 = merc.ll(pixelDest1, 22);
     const cordDest2 = merc.ll(pixelDest2, 22);
     const cordDest3 = merc.ll(pixelDest3, 22);
@@ -21,7 +22,7 @@ for (var i = 0; i < 50; i++) {
     var coordinates = [[origin, cordDest1, cordDest2, cordDest3, origin],
     ];
    // function that returns a random owner
-
+    
     var feature = {
       id: count,
       geometry: {
@@ -29,7 +30,7 @@ for (var i = 0; i < 50; i++) {
         coordinates: coordinates,
       },
       type: "Feature",
-      
+      properties:{}
     };
     features.push(feature);
     origin = cordDest1;
