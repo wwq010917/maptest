@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 
 const ColorPanel = (props) => {
-    const { onColorChange } = props;
-    const [selectedColor, setSelectedColor] = useState("red");
-    console.log(props)
-    const handleColorChange = (event) => {
-      setSelectedColor(event.target.value);
-      
-      onColorChange(event.target.value);
-    };
-  
+  const { onColorChange } = props;
+  const [selectedColor, setSelectedColor] = useState("red");
+
+  const handleColorChange = (event) => {
+    setSelectedColor(event.target.value);
+
+    onColorChange(event.target.value);
+  };
+
   return (
     <div className="color-panel">
       <h2>Choose a color:</h2>
@@ -32,7 +32,7 @@ const ColorPanel = (props) => {
             checked={selectedColor === "orange"}
             onChange={handleColorChange}
           />
-        <span style={{ color: "Orange" }}>Orange</span>
+          <span style={{ color: "Orange" }}>Orange</span>
         </label>
         <label>
           <input
@@ -42,7 +42,7 @@ const ColorPanel = (props) => {
             checked={selectedColor === "yellow"}
             onChange={handleColorChange}
           />
-         <span style={{ color: "Yellow" }}>Yellow</span>
+          <span style={{ color: "Yellow" }}>Yellow</span>
         </label>
         <label>
           <input
@@ -52,20 +52,19 @@ const ColorPanel = (props) => {
             checked={selectedColor === "green"}
             onChange={handleColorChange}
           />
-         <span style={{ color: "Green" }}>Green</span>
+          <span style={{ color: "Green" }}>Green</span>
         </label>
         <label>
           <input
             type="radio"
             name="color"
             value="blue"
-            
             checked={selectedColor === "blue"}
             onChange={handleColorChange}
           />
           <span style={{ color: "blue" }}>Blue</span>
         </label>
-       
+
         <label>
           <input
             type="radio"
@@ -74,7 +73,7 @@ const ColorPanel = (props) => {
             checked={selectedColor === "purple"}
             onChange={handleColorChange}
           />
-         <span style={{ color: "Purple" }}>Purple</span>
+          <span style={{ color: "Purple" }}>Purple</span>
         </label>
         <label>
           <input
@@ -84,7 +83,7 @@ const ColorPanel = (props) => {
             checked={selectedColor === "black"}
             onChange={handleColorChange}
           />
-         <span style={{ color: "black" }}>Black</span>
+          <span style={{ color: "black" }}>Black</span>
         </label>
       </div>
       <p>Selected color: {selectedColor}</p>

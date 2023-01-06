@@ -1,8 +1,9 @@
 import mapboxgl from "mapbox-gl";
 import ColorPanel from "./color.js";
 import React, { useEffect, useRef, useState } from "react";
+import * as turf from "@turf/turf";
 import "./Map.css";
-
+const SphericalMercator = require("@mapbox/sphericalmercator");
 mapboxgl.accessToken =
   "pk.eyJ1Ijoid3dxMDEwOTE3IiwiYSI6ImNsYXIxYjFocjAwNHozdnFxbDlkN2l3anEifQ.cVluyRrnbcBLDZoJMOGysQ";
 
@@ -38,19 +39,21 @@ const Map = () => {
     map.on("load", () => {
       console.log(zoom);
       const layers = map.getStyle().layers;
-      console.log(layers);
+
       for (const layer of layers) {
         if (layer.id === "tippecanoe4") {
           layer7 = layer;
           break;
         }
       }
-      console.log(layer7);
 
       map.addControl(new mapboxgl.NavigationControl());
     });
     map.on("click", function (e) {
-      var features = map.queryRenderedFeatures(e.point, {
+      //this could be used to convert userlocation to pixelpoint
+      const pixelpoint = map.project(e.lngLat);
+
+      var features = map.queryRenderedFeatures(pixelpoint, {
         layers: ["tippecanoe4"],
       });
       if (!features.length) {
@@ -58,10 +61,9 @@ const Map = () => {
       }
       console.log(features);
       const clickedPolygon = features[0];
-      console.log(clickedPolygon.id);
-      console.log(zoom);
-      if (map.getZoom() >= 15) {
-        console.log("nice");
+      console.log(clickedPolygon);
+
+      if (map.getZoom() >= 16.5) {
         map.setFeatureState(
           {
             source: "composite",
