@@ -29,16 +29,24 @@ fs.truncate("polygons.geojson", 0, (error) => {
     var features = [];
     var origin = [-87.096306, 40.214224];
     var count = 0;
-    for (var i = 0; i < 2500; i++) {
+    //2000*2000
+    for (var i = 0; i < 10; i++) {
       if (origin[0] > -86.694305 || origin[1] > 40.563003) {
         break;
       }
-      for (var j = 0; j < 2500; j++) {
+      for (var j = 0; j < 10; j++) {
         if (origin[0] > -86.694305 || origin[1] > 40.563003) {
+          console.log(origin[0]);
+          console.log();
           break;
         }
         var pixelOrigin = merc.px(origin, 22);
+        if (count == 0) {
+          console.log(pixelOrigin);
+        }
+        //1405.38 == 20m
         const pixelDest1 = [pixelOrigin[0], pixelOrigin[1] - 1405.38];
+        //(x,y)
         const pixelDest2 = [pixelOrigin[0] + 1405.38, pixelOrigin[1] - 1405.38];
         const pixelDest3 = [pixelOrigin[0] + 1405.38, pixelOrigin[1]];
         const cordDest1 = merc.ll(pixelDest1, 22);
@@ -48,7 +56,6 @@ fs.truncate("polygons.geojson", 0, (error) => {
           iter = cordDest3;
         }
         var coordinates = [[origin, cordDest1, cordDest2, cordDest3, origin]];
-
         var feature = {
           id: count,
           geometry: {

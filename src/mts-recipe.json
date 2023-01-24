@@ -1,8 +1,8 @@
 {
   "version": 1,
   "layers": {
-    "Tippecanoe4": {
-      "source": "mapbox://tileset-source/wwq010917/Tippecanoe4-src",
+    "test99": {
+      "source": "mapbox://tileset-source/wwq010917/test99-src",
       "minzoom": 13,
       "maxzoom": 16,
       "features": { "simplification": { "distance": 0 } },

@@ -6,9 +6,11 @@
     "@mapbox/sphericalmercator": "^1.2.0",
     "@turf/turf": "^6.5.0",
     "mapbox-gl": "^1.11.1",
+    "mongodb": "^4.13.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "^3.4.3",
+    "realm": "^11.3.2",
     "turf-inside": "^3.0.12"
   },
   "scripts": {

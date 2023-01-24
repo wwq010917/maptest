@@ -31,3 +31,9 @@ src/westLafayette.geojson
 src/polygons1.geojsonl
 src/polygons.geojson
 src/grid.geojson
+src/realm-files/myrealm.realm
+src/realm-files/myrealm.realm.lock
+src/realm-files/myrealm2.realm
+src/realm-files/myrealm2.realm.lock
+src/mts-config.json
+src/mts-recipe.json

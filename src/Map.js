@@ -6,10 +6,16 @@ import "./Map.css";
 const SphericalMercator = require("@mapbox/sphericalmercator");
 mapboxgl.accessToken =
   "pk.eyJ1Ijoid3dxMDEwOTE3IiwiYSI6ImNsYXIxYjFocjAwNHozdnFxbDlkN2l3anEifQ.cVluyRrnbcBLDZoJMOGysQ";
-
+const endpoint = [-86.69425383210182, 40.563148756166015];
+const startpoint = [-87.09630623459816, 40.214223726606235];
 var iter;
 let layer7;
 var color = "red";
+var count = 0;
+const merc = new SphericalMercator({
+  size: 512,
+  antimeridian: true,
+});
 
 const Map = () => {
   const handleColorChange = (selectedColor) => {
@@ -39,7 +45,7 @@ const Map = () => {
     map.on("load", () => {
       console.log(zoom);
       const layers = map.getStyle().layers;
-
+      console.log(layers);
       for (const layer of layers) {
         if (layer.id === "tippecanoe4") {
           layer7 = layer;
@@ -50,7 +56,9 @@ const Map = () => {
       map.addControl(new mapboxgl.NavigationControl());
     });
     map.on("click", function (e) {
+      console.log(e);
       //this could be used to convert userlocation to pixelpoint
+
       const pixelpoint = map.project(e.lngLat);
 
       var features = map.queryRenderedFeatures(pixelpoint, {
@@ -59,9 +67,39 @@ const Map = () => {
       if (!features.length) {
         return;
       }
-      console.log(features);
+
       const clickedPolygon = features[0];
-      console.log(clickedPolygon);
+
+      const y = 1945;
+      const x = 1707;
+      const pendpoint = merc.px(endpoint, 22);
+      const pstartpoint = merc.px(startpoint, 22);
+      const samplepoint = [e.lngLat.lng, e.lngLat.lat];
+      const psamplepoint = merc.px(samplepoint, 22);
+      let xdiff = pendpoint[0] - pstartpoint[0];
+      let ydiff = pendpoint[1] - pstartpoint[1];
+      let samplexdiff = psamplepoint[0] - pstartpoint[0];
+      let sampleydiff = psamplepoint[1] - pstartpoint[1];
+
+      console.log(
+        //data is xdiff/x and y diff / y
+        Math.abs(Math.ceil(sampleydiff / 1405.0005858230813)) +
+          Math.abs(Math.ceil(samplexdiff / 1405.0015424164524) - 1) * 1945
+      );
+
+      console.log(clickedPolygon.id);
+      //console.log((Math.ceil(samplexdiff / 1405.0015424164524) - 1) * 1945);
+      if (
+        clickedPolygon.id !=
+        Math.abs(Math.ceil(sampleydiff / 1405.0005858230813)) +
+          Math.abs(Math.ceil(samplexdiff / 1405.0015424164524) - 1) * 1945
+      ) {
+        count++;
+        console.log(count);
+      }
+      const polygon = map.querySourceFeatures("composite", {
+        sourceLayer: "Tippecanoe4",
+      });
 
       if (map.getZoom() >= 16.5) {
         map.setFeatureState(
@@ -73,6 +111,7 @@ const Map = () => {
           { fillColor: color, fillOpacity: 1 }
         );
       }
+
       map.setPaintProperty("tippecanoe4", "fill-color", [
         "case",
         ["!=", ["feature-state", "fillColor"], null],
