@@ -37,21 +37,36 @@ const Map = () => {
       container: mapContainerRef.current,
       style: "mapbox://styles/wwq010917/cldhd91es001401omfcb4quyp",
       center: origin,
-      zoom: 18, // starting zoom
+      zoom: 10, // starting zoom
       minZoom: 3,
     });
     map.on("zoom", () => {
       setZoom(map.getZoom().toFixed(2));
     });
     map.on("load", () => {
-      map.addSource("some id", {
+      map.addSource("polygonsource", {
         type: "vector",
-        tiles: ["https://d25uarhxywzl1j.cloudfront.net/v0.1/22/5/10.mvt"],
-        minzoom: 6,
-        maxzoom: 14,
+        tiles: ["http://localhost:7777/v2/tiles/{z}/{x}/{y}.pbf"],
+        minzoom: 0,
+        maxzoom: 24,
       });
+
+      map.addLayer({
+        id: "polygons",
+        type: "fill",
+        source: "polygonsource",
+        "source-layer": "polygons",
+        paint: {
+          "fill-color": ["match", ["get", "color"], "red", "green", "blue"],
+          "fill-opacity": 1,
+        },
+      });
+      const polygon = map.querySourceFeatures("polygons", {
+        sourceLayer: "polygons",
+      });
+      console.log(polygon[0]);
       console.log(zoom);
-      const sources = map.getSource("some id").coordinates;
+      const sources = map.getSource("some id");
       const layers = map.getStyle().layers;
       console.log(sources);
       for (const layer of layers) {
@@ -60,20 +75,6 @@ const Map = () => {
           break;
         }
       }
-      let matchStatement = ["match", ["get", "id"]];
-
-      let matchStatement2 = ["match", ["get", "id"]];
-      //
-      for (let i = 0; i < 40000; i++) {
-        matchStatement.push(i, "red");
-      }
-      for (let i = 0; i < 40000; i++) {
-        matchStatement2.push(i, 1);
-      }
-      matchStatement.push("white");
-      matchStatement2.push(0);
-      map.setPaintProperty("county2", "fill-color", matchStatement);
-      map.setPaintProperty("county2", "fill-opacity", matchStatement2);
 
       map.addControl(new mapboxgl.NavigationControl());
     });
@@ -85,8 +86,9 @@ const Map = () => {
 
       //console.log(requiredStatement);
       var features = map.queryRenderedFeatures(pixelpoint, {
-        layers: ["40county"],
+        layers: ["polygons"],
       });
+      console.log(features);
       if (!features.length) {
         return;
       }
@@ -105,12 +107,11 @@ const Map = () => {
       let sampleydiff = psamplepoint[1] - pstartpoint[1];
 
       console.log(
-        //data is xdiff/x and y diff / y
         Math.abs(Math.ceil(sampleydiff / 1405.0005858230813)) +
           Math.abs(Math.ceil(samplexdiff / 1405.0015424164524) - 1) * 1945
       );
-      console.log("id");
-      console.log(clickedPolygon.id);
+      // console.log("id");
+      console.log(clickedPolygon);
       //console.log((Math.ceil(samplexdiff / 1405.0015424164524) - 1) * 1945);
       if (
         clickedPolygon.id !=
@@ -120,15 +121,12 @@ const Map = () => {
         count++;
         console.log(count);
       }
-      const polygon = map.querySourceFeatures("composite", {
-        sourceLayer: "Tippecanoe4",
-      });
 
       if (map.getZoom() >= 16.5) {
         map.setFeatureState(
           {
-            source: "composite",
-            sourceLayer: "Tippecanoe4",
+            source: "polygons",
+            sourceLayer: "polygons",
             id: clickedPolygon.id,
           },
           { fillColor: color, fillOpacity: 1 }

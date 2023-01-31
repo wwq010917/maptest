@@ -59,12 +59,11 @@ fs.truncate("polygons.geojson", 0, (error) => {
           type: "Feature",
           properties: {
             id: count,
-            color: "red",
           },
         };
 
         // Convert the feature to a string in GeoJSON format
-        if (count != 200 * 200 - 1) {
+        if (count != 2000 * 2000 - 1) {
           featureString = JSON.stringify(feature) + ",\n";
         } else {
           featureString = JSON.stringify(feature);

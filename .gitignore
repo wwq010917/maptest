@@ -38,3 +38,9 @@ src/realm-files/myrealm2.realm.lock
 src/mts-config.json
 src/mts-recipe.json
 src/polygons2.geojson
+src/compressed2.mbtiles
+src/compressed2.mbtiles-journal
+src/compressed12.mbtiles
+src/final2.mbtiles
+src/final2.mbtiles-journal
+src/nocompress.mbtiles
