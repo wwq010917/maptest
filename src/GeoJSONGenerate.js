@@ -13,6 +13,7 @@ let endstr = `
   ]
 }`;
 // Open the file for writing
+var featureString;
 fs.truncate("polygons.geojson", 0, (error) => {
   fs.open("polygons.geojson", "w", (error, fd) => {
     if (error) {
@@ -26,29 +27,22 @@ fs.truncate("polygons.geojson", 0, (error) => {
     });
     // Start the loop to generate the features
     //[-87.096306,40.214224,-86.694305,40.563003]
+
     var features = [];
     var origin = [-87.096306, 40.214224];
     var count = 0;
     //2000*2000
-    for (var i = 0; i < 10; i++) {
-      if (origin[0] > -86.694305 || origin[1] > 40.563003) {
-        break;
-      }
-      for (var j = 0; j < 10; j++) {
-        if (origin[0] > -86.694305 || origin[1] > 40.563003) {
-          console.log(origin[0]);
-          console.log();
-          break;
-        }
+    for (var i = 0; i < 2000; i++) {
+      for (var j = 0; j < 2000; j++) {
         var pixelOrigin = merc.px(origin, 22);
         if (count == 0) {
           console.log(pixelOrigin);
         }
-        //1405.38 == 20m
-        const pixelDest1 = [pixelOrigin[0], pixelOrigin[1] - 1405.38];
+        //2810 == 40m
+        const pixelDest1 = [pixelOrigin[0], pixelOrigin[1] - 1405];
         //(x,y)
-        const pixelDest2 = [pixelOrigin[0] + 1405.38, pixelOrigin[1] - 1405.38];
-        const pixelDest3 = [pixelOrigin[0] + 1405.38, pixelOrigin[1]];
+        const pixelDest2 = [pixelOrigin[0] + 1405, pixelOrigin[1] - 1405];
+        const pixelDest3 = [pixelOrigin[0] + 1405, pixelOrigin[1]];
         const cordDest1 = merc.ll(pixelDest1, 22);
         const cordDest2 = merc.ll(pixelDest2, 22);
         const cordDest3 = merc.ll(pixelDest3, 22);
@@ -63,11 +57,18 @@ fs.truncate("polygons.geojson", 0, (error) => {
             coordinates: coordinates,
           },
           type: "Feature",
-          properties: {},
+          properties: {
+            id: count,
+            color: "red",
+          },
         };
 
         // Convert the feature to a string in GeoJSON format
-        const featureString = JSON.stringify(feature) + ",";
+        if (count != 200 * 200 - 1) {
+          featureString = JSON.stringify(feature) + ",\n";
+        } else {
+          featureString = JSON.stringify(feature);
+        }
 
         // Append the feature string to the file
         fs.appendFile(fd, featureString, (error) => {

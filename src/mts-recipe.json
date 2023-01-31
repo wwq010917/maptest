@@ -1,9 +1,9 @@
 {
   "version": 1,
   "layers": {
-    "test99": {
-      "source": "mapbox://tileset-source/wwq010917/test99-src",
-      "minzoom": 13,
+    "40county3": {
+      "source": "mapbox://tileset-source/wwq010917/40county3-src",
+      "minzoom": 12,
       "maxzoom": 16,
       "features": { "simplification": { "distance": 0 } },
       "tiles": {

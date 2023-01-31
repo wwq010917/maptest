@@ -26,7 +26,8 @@ const Map = () => {
 
   const mapContainerRef = useRef(null);
   const [zoom, setZoom] = useState(18);
-  var origin = [-86.945623, 40.470332];
+  //var origin = [-86.945623, 40.470332];
+  var origin = [-87.096306, 40.214224];
   const ZoomPanel = () => {
     return <div className="zoom-panel">Zoom level: {zoom}</div>;
   };
@@ -34,7 +35,7 @@ const Map = () => {
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style: "mapbox://styles/wwq010917/clcd19za9008f14qqtna3k281",
+      style: "mapbox://styles/wwq010917/cldhd91es001401omfcb4quyp",
       center: origin,
       zoom: 18, // starting zoom
       minZoom: 3,
@@ -43,15 +44,36 @@ const Map = () => {
       setZoom(map.getZoom().toFixed(2));
     });
     map.on("load", () => {
+      map.addSource("some id", {
+        type: "vector",
+        tiles: ["https://d25uarhxywzl1j.cloudfront.net/v0.1/22/5/10.mvt"],
+        minzoom: 6,
+        maxzoom: 14,
+      });
       console.log(zoom);
+      const sources = map.getSource("some id").coordinates;
       const layers = map.getStyle().layers;
-      console.log(layers);
+      console.log(sources);
       for (const layer of layers) {
-        if (layer.id === "tippecanoe4") {
+        if (layer.id === "test2") {
           layer7 = layer;
           break;
         }
       }
+      let matchStatement = ["match", ["get", "id"]];
+
+      let matchStatement2 = ["match", ["get", "id"]];
+      //
+      for (let i = 0; i < 40000; i++) {
+        matchStatement.push(i, "red");
+      }
+      for (let i = 0; i < 40000; i++) {
+        matchStatement2.push(i, 1);
+      }
+      matchStatement.push("white");
+      matchStatement2.push(0);
+      map.setPaintProperty("county2", "fill-color", matchStatement);
+      map.setPaintProperty("county2", "fill-opacity", matchStatement2);
 
       map.addControl(new mapboxgl.NavigationControl());
     });
@@ -61,8 +83,9 @@ const Map = () => {
 
       const pixelpoint = map.project(e.lngLat);
 
+      //console.log(requiredStatement);
       var features = map.queryRenderedFeatures(pixelpoint, {
-        layers: ["tippecanoe4"],
+        layers: ["40county"],
       });
       if (!features.length) {
         return;
@@ -86,7 +109,7 @@ const Map = () => {
         Math.abs(Math.ceil(sampleydiff / 1405.0005858230813)) +
           Math.abs(Math.ceil(samplexdiff / 1405.0015424164524) - 1) * 1945
       );
-
+      console.log("id");
       console.log(clickedPolygon.id);
       //console.log((Math.ceil(samplexdiff / 1405.0015424164524) - 1) * 1945);
       if (
@@ -111,19 +134,6 @@ const Map = () => {
           { fillColor: color, fillOpacity: 1 }
         );
       }
-
-      map.setPaintProperty("tippecanoe4", "fill-color", [
-        "case",
-        ["!=", ["feature-state", "fillColor"], null],
-        ["feature-state", "fillColor"],
-        "#f8f8ff",
-      ]);
-      map.setPaintProperty("tippecanoe4", "fill-opacity", [
-        "case",
-        ["!=", ["feature-state", "fillOpacity"], null],
-        ["feature-state", "fillOpacity"],
-        0,
-      ]);
     });
 
     // Clean up on unmount
